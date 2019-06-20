@@ -87,3 +87,12 @@ Now, lets look how QDA algorithm can hadle it:
 
 <a href="https://ibb.co/pWRTdtD"><img src="https://i.ibb.co/RhBKcxn/qda-model.png" alt="qda-model" border="0" width="1000px"></a>
 
+Pretty good, however, we see that it doesn't see this structure of four clusters in the data. From make_classification documentation one can find that these clusters are gaussian components, so the best way to find them is to apply Gaussian Mixture model. 
+
+_Note: Gaussian Mixture model will only give you clusters, you need to bind these clusters to one of the classes 0 or 1. That you can do by looking at the proportion of the certain class in each cluster and assigning cluster to the dominant class._
+
+Lets look how GMM algorithm performed at this data:
+
+<a href="https://ibb.co/Q9sPPxm"><img src="https://i.ibb.co/0qPCCzJ/gm-model.png" alt="gm-model" border="0" width="1000px"></a>
+
+
