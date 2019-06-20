@@ -10,7 +10,7 @@ I entered the Instant Gratification competition when it was 16 days to go, so th
 
 - This high quality can be explained by the fact that the [data probably was generated with make_classification function](https://www.kaggle.com/mhviraf/synthetic-data-for-next-instant-gratification).
 
-Knowing that let's look closer at what make_classification function does. This function has the following parameters:
+Knowing that let's look closer at what make_classification function has under the hood. This function has the following parameters:
 
 - n_samples: The number of samples.
 - n_features: The total number of features.
@@ -28,7 +28,7 @@ Knowing that let's look closer at what make_classification function does. This f
 - shuffle: Shuffling the samples and the features.
 - random_state: Random state.
 
-So, I invite you to follow the sequence of my thoughts.
+I invite you to follow the sequence of my thoughts about it.
 
 ***
 
@@ -51,7 +51,7 @@ fake_data = make_classification(
 
 By setting shuffle=False, I force first 30 columns to be informative, next 30 to be redundant and others to be just noise. By doing it 1000 times lets look at the distribution of the standard deviation of the informative, redundant and random features.
 
-<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0" width="500px"></a>
+<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0" width="800px"></a>
 
 We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**
 
@@ -71,7 +71,7 @@ Parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones 
 
 QDA shown to be a very good approach, but let me show you the case when it's working not so good:
 
-<a href="https://ibb.co/vVDRDf7"><img src="https://i.ibb.co/k5MvMzR/4-components.png" alt="4-components" border="0" width="500px"></a>
+<a href="https://ibb.co/vVDRDf7"><img src="https://i.ibb.co/k5MvMzR/4-components.png" alt="4-components" border="0" width="800px"></a>
 
 Data set was generated with make_classification:
 
@@ -85,7 +85,7 @@ make_classification(
 
 Now, lets look how QDA algorithm can hadle it:
 
-<a href="https://ibb.co/pWRTdtD"><img src="https://i.ibb.co/RhBKcxn/qda-model.png" alt="qda-model" border="0" width="500px"></a>
+<a href="https://ibb.co/pWRTdtD"><img src="https://i.ibb.co/RhBKcxn/qda-model.png" alt="qda-model" border="0" width="800px"></a>
 
 Pretty good, however, we see that it doesn't see this structure of four clusters in the data. From make_classification documentation one can find that these clusters are gaussian components, so the best way to find them is to apply Gaussian Mixture model. 
 
@@ -93,7 +93,7 @@ _Note: Gaussian Mixture model will only give you clusters, you need to bind thes
 
 Lets look how GMM algorithm performed at this data:
 
-<a href="https://ibb.co/Q9sPPxm"><img src="https://i.ibb.co/0qPCCzJ/gm-model.png" alt="gm-model" border="0" width="500px"></a>
+<a href="https://ibb.co/Q9sPPxm"><img src="https://i.ibb.co/0qPCCzJ/gm-model.png" alt="gm-model" border="0" width="800px"></a>
 
 Nearly perfect! Let's move to the step 4.
 
@@ -109,7 +109,7 @@ Predictions = \[0.0000, 0.0001, ..., 0.9998, 0.9999\]
 
 Lets flip the target value for 2.5% (250) of the points (1) in the middle, (2) on the sides, (3) randomly, and look at the AUC:
 
-<a href="https://ibb.co/M1cNwkw"><img src="https://i.ibb.co/c86Tfhf/flipping-effect.png" alt="flipping-effect" border="0" width="500px" align="center"></a>
+<a href="https://ibb.co/M1cNwkw"><img src="https://i.ibb.co/c86Tfhf/flipping-effect.png" alt="flipping-effect" border="0" width="800px" align="center"></a>
 
 We see that the impact from flips can drammatically change the result. However, let's face two facts:
 
@@ -118,7 +118,7 @@ We see that the impact from flips can drammatically change the result. However, 
 
 Let's also look at the distribution of AUC for randomly flipped target.
 
-<a href="https://ibb.co/PjBttyk"><img src="https://i.ibb.co/F3Gnn1p/auc.png" alt="auc" border="0" width="500px"></a>
+<a href="https://ibb.co/PjBttyk"><img src="https://i.ibb.co/F3Gnn1p/auc.png" alt="auc" border="0" width="800px"></a>
 
 It means that results on unseen data can deviate by more than 0.005 in AUC even for the perfect model. So our strategy will be not to find the parameters to raise on the LB of the competition, but to find the parameters that can perfectly predict target for most of the data set.
 
