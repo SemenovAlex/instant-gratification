@@ -198,15 +198,21 @@ We still have one thing not clear.
 We were building models in the assumption that there are 3 clusters per class, but how can we know it? Well, the answer is pretty simple, right choice of the n_components will give better results:
 
 #Clusters per class = 4, #Components of GMM = 4: AUC = 0.7170955882352941
+
 #Clusters per class = 4, #Components of GMM = 6: AUC = 0.8263480392156862
+
 #Clusters per class = 4, #Components of GMM = 8: AUC = 0.9587009803921569
 
 #Clusters per class = 3, #Components of GMM = 4: AUC = 0.7400829259236339
+
 #Clusters per class = 3, #Components of GMM = 6: AUC = 1.0
+
 #Clusters per class = 3, #Components of GMM = 8: AUC = 0.9844049755554181
 
 #Clusters per class = 2, #Components of GMM = 4: AUC = 1.0
+
 #Clusters per class = 2, #Components of GMM = 6: AUC = 1.0
+
 #Clusters per class = 2, #Components of GMM = 8: AUC = 0.9924635532493205
 
 For me it seemed like for most of the groups the best option was taking 3 clusters per class, sometimes 2 was slightly better (but it might be the effect of the flipped target). I assumed that this parameter was set to 3 for all groups.
