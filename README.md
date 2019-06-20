@@ -109,7 +109,7 @@ Predictions = \[0.0000, 0.0001, ..., 0.9998, 0.9999\]
 
 Lets flip the target value for 2.5% (250) of the points (1) in the middle, (2) on the sides, (3) randomly, and look at the AUC:
 
-<a href="https://ibb.co/M1cNwkw"><img src="https://i.ibb.co/c86Tfhf/flipping-effect.png" alt="flipping-effect" border="0" "500px"></a>
+<a href="https://ibb.co/M1cNwkw"><img src="https://i.ibb.co/c86Tfhf/flipping-effect.png" alt="flipping-effect" border="0" width="500px" align="middle"></a>
 
 We see that the impact from flips can drammatically change the result. However, let's face two facts:
 
