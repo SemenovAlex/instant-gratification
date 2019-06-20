@@ -95,4 +95,15 @@ Lets look how GMM algorithm performed at this data:
 
 <a href="https://ibb.co/Q9sPPxm"><img src="https://i.ibb.co/0qPCCzJ/gm-model.png" alt="gm-model" border="0" width="1000px"></a>
 
+Nearly perfect! Let's move to the step 4.
 
+***
+
+### Step 4. Effect of flipping the target
+
+Knowing that we can build nearly the best classifier, what is the effect of flipping the target? Suppose that your classes are perfectly separable and you can assign probabilities that will lead to a perfect AUC. Let's see an example of 10000 points, 5000 in each class:
+
+$$Classes = \{0, 0, ..., 0, 1,..., 1, 1\}$$
+$$Predictions = \{0.000, 0.001, ..., 0.998, 0.999\}$$
+
+Lets flip the target value for 2.5% (250) of the points (1) in the middle, (2) on the sides, (3) randomly:
