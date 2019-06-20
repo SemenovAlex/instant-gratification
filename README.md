@@ -36,7 +36,7 @@ So, I invite you to follow the sequence of my thoughts.
 
 From the data structure (512 groups and 255 variables) and size (262144 = 512 * 512), we can assume that **n_features=255** and **n_samples=1024** were taken to generate both training and test data sets (both private and public).
 
-Now, let's talk about features. First of all, repeated features are exact copies of important features, and because we don't see such columns in competition data we set **n_repeated=0**. Let's generate data set with make_classification function and following parameters:
+Now, let's talk about features. First of all, repeated features are exact copies of important features, and because we don't see such columns in competition data we'll set **n_repeated=0**. Let's generate data set with make_classification function and following parameters:
 
 ~~~~
 fake_data = make_classification(
@@ -49,13 +49,22 @@ fake_data = make_classification(
     shuffle=False)
 ~~~~
 
-<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0"></a>
-
 By setting shuffle=False, I force first 30 columns to be informative, next 30 to be redundant and others to be just noise. By doing it 1000 times lets look at the distribution of the standard deviation of the informative, redundant and random features.
 
-![features-std](https://github.com/SemenovAlex/instant-gratification/blob/master/features-std.png)
+<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0" width="1000px"></a>
 
-Number of important features ranges from 33 to 47, so **n_informative** $\in$ **{33,...,47}**. Number of redundant features is **n_redundant=255-n_informative**, while there's no repeated features  Number of classes is obviously **n_classes=2**. From the feature statistics I will assume that parameters shift and scale were set to default **shift=0**, **scale=1**. Parameters **shuffle** and **random_state** are not so important for us right now, because they not change the nature of the data set.
+We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**
+
+Number of important features ranges from 33 to 47, so **n_informative** $\in$ **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
+
+***
+
+### Step 2. Shift, Scale and randomness (last 4 parameters of make_classification function).
+
+
+
+
+From the feature statistics I will assume that parameters shift and scale were set to default **shift=0**, **scale=1**. Parameters **shuffle** and **random_state** are not so important for us right now, because they not change the nature of the data set.
 
 <br>
 
