@@ -53,21 +53,21 @@ By setting shuffle=False, I force first 30 columns to be informative, next 30 to
 
 <a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0" width="800px"></a>
 
-We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**
+We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**.
 
-Number of important features ranges from 33 to 47, so **n_informative** in **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
+Number of important features ranges from 33 to 47, so **n_informative** is in **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
 
 ***
 
 ### Step 2. Shift, Scale and randomness (last 4 parameters of make_classification function).
 
-Because mean and standard deviation for random columns are 0 and 1 respectively, we can assume that shift and scale were set to default **shift=0**, **scale=1**. On top of that, standard deviation for important columns also look the same for competition data and for data that we've just generated. So it's a pretty promising assumption and we can go further. Parameters **shuffle** and **random_state** are not so important, because they not change the nature of the data set.
+Because mean and standard deviation for random columns are 0 and 1 respectively, we can assume that shift and scale were set to default **shift=0**, **scale=1**. On top of that, standard deviation for important columns also look the same for competition data and for data that we've just generated. So it's a pretty promising assumption and we can go further. Parameters **shuffle** and **random_state** are not so important, because they don't change the nature of the data set.
 
 ***
 
 ### Step 3. Most interesting parameters (why QDA is not so perfect?).
 
-Parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones that we are not very sure about, especially **n_clusters_per_class**. Weights look to be the same, because target seemed to be balanced. What makes it imposible to get 100% accurate model is that **flip_y>0**, and we can not predict this random factor in any case. However, what we can try is to build a model that can perfectly predict when **flip_y=0** and leave the rest for the luck.
+Parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones that we are not very sure about, especially **n_clusters_per_class**. Weights look to be the same, because target seemed to be balanced. What probably makes it imposible to get 100% accurate model is that **flip_y>0**, and we can not predict this random factor in any case. However, what we can try is to build a model that can perfectly predict when **flip_y=0** and leave the rest for the luck.
 
 QDA shown to be a very good approach, but let me show you the case when it's working not so good:
 
