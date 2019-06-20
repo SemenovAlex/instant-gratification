@@ -191,7 +191,7 @@ To tell you the short story, by a simple grid search for the best reg_covar para
 - 46 features: 9.5,
 - 47 features: 10.
 
-We still have one thing not clarified enough.
+We still have one thing not clear.
 
 ### Important note: how do we know the number of clusters in advance?
 
@@ -215,6 +215,9 @@ For me it seemed like for most of the groups the best option was taking 3 cluste
 
 ### Conclusion
 
-Parameters found in step 5 will give you an AUC of 0.99 minimum (for the true target of course)! So we will use these parameters to build a model for competition data. Final kernel with model can be found [here]().
+Parameters found in step 5 will give you an AUC of 0.99 minimum (for the true target of course)! So we will use these parameters to build a model for competition data. 
+
+Final kernel with the model can be found [here]().
+Jypyter Notebook for this analysis can be found [here]().
 
 Thanks for reading!
