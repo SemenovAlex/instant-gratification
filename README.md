@@ -126,7 +126,7 @@ It means that results on unseen data can deviate by more than 0.005 in AUC even 
 
 ### Step 5. Experiments with synthetic data
 
-How we can build a model that perfectly predicts data and not overfit to it? Because we have a strong hypothesis on how data was created we can tune model parameters such that it will predict perfectly for most of the synthetically generated data sets. Not showing competition to it will save us from overfitting.
+How we can build a model that perfectly predicts data and not overfit to it? Because we have a strong hypothesis on how data was created we can tune model parameters such that it will predict perfectly for most of the synthetically generated data sets. Not showing competition data to it will save us from overfitting.
 
 We will be generating a data set of the same structure as the competition data:
 
