@@ -103,10 +103,17 @@ Nearly perfect! Let's move to the step 4.
 
 Knowing that we can build nearly the best classifier, what is the effect of flipping the target? Suppose that your classes are perfectly separable and you can assign probabilities that will lead to a perfect AUC. Let's see an example of 10000 points, 5000 in each class:
 
-Classes = \[0, 0, ..., 0, 1,..., 1, 1\]
+Classes = \[0, 0, ..., 0, 1, ..., 1, 1\]
 
 Predictions = \[0.0000, 0.0001, ..., 0.9998, 0.9999\]
 
 Lets flip the target value for 2.5% (250) of the points (1) in the middle, (2) on the sides, (3) randomly, and look at the AUC:
 
+<a href="https://ibb.co/M1cNwkw"><img src="https://i.ibb.co/c86Tfhf/flipping-effect.png" alt="flipping-effect" border="0" "500px" align="middle"></a>
 
+We see that the impact from flips can drammatically change the result. However, let's face two facts:
+
+1. We can not predict this randomness.
+2. We can assume that the flips are evenly spread across our predictions.
+
+Let's also look at the distribution of AUC for randomly flipped target.
