@@ -103,7 +103,9 @@ Nearly perfect! Let's move to the step 4.
 
 Knowing that we can build nearly the best classifier, what is the effect of flipping the target? Suppose that your classes are perfectly separable and you can assign probabilities that will lead to a perfect AUC. Let's see an example of 10000 points, 5000 in each class:
 
-$$Classes = \{0, 0, ..., 0, 1,..., 1, 1\}$$
-$$Predictions = \{0.000, 0.001, ..., 0.998, 0.999\}$$
+Classes = \[0, 0, ..., 0, 1,..., 1, 1\]
+Predictions = \[0.0000, 0.0001, ..., 0.9998, 0.9999\]
 
-Lets flip the target value for 2.5% (250) of the points (1) in the middle, (2) on the sides, (3) randomly:
+Lets flip the target value for 2.5% (250) of the points (1) in the middle, (2) on the sides, (3) randomly, and look at the AUC:
+
+
