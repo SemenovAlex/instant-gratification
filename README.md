@@ -49,6 +49,8 @@ fake_data = make_classification(
     shuffle=False)
 ~~~~
 
+<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0"></a>
+
 By setting shuffle=False, I force first 30 columns to be informative, next 30 to be redundant and others to be just noise. By doing it 1000 times lets look at the distribution of the standard deviation of the informative, redundant and random features.
 
 ![features-std](https://github.com/SemenovAlex/instant-gratification/blob/master/features-std.png)
