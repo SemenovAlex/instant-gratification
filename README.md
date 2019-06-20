@@ -130,6 +130,9 @@ How we can build a model that perfectly predicts data and not overfit to it? Bec
 
 We will be generating a data set of the same structure as the competition data:
 
+- **n_samples=768**, 512 for training and 256 for test
+- **n_features=255**
+- **n_important=33**
 - **n_clusters_per_class=3**
 - by variating **weights**, we will change the propotion of the dominant class from 0.5 to 0.6
 - **flip=0** to experiment if GM model can be completely correct
@@ -141,8 +144,77 @@ Next thing to do is to generate hundreds of such data sets and optimize paramete
 For the first attempt we'll set the parameter n_components in the GMM to 6, because we know that there will be 3 clusters per each of the 2 classes, and do the modelling with other parameters set to default. Let's look at the minimum, maximum and mean score that we can get for 100 different data sets:
 
 ```
-Min score =  0.44783168741949336
-Mean score =  0.8159223370950822
+Min score = 0.44783168741949336
+Mean score = 0.8159223370950822
+Max score = 1.0
+```
+
+Wow! Sometimes we even reached the perfect classifier. Let's try to optimize some of the GMM parameters. It has parameters n_init and init_params which means that GMM model will be run several times starting from random initializations and then it selects the best iteration. Let's try to set n_init to 20 and init_params to random.
+
+```
+Min score = 1.0
+Mean score = 1.0
+Max score = 1.0
+```
+
+Now it's perfect! Let's try it for more than 33 features (for example, let's take 47):
+
+```
+Min score =  0.562083024462565
+Mean score =  0.7917138432059158
 Max score =  1.0
 ```
 
+For 47 features it worked not so well. The secret sauce is the regularization of the covariance matrix. Let's look at the model quality for different values of reg_covar parameter of GM model:
+
+```
+reg_covar = 1: Min score = 0.6936146721462308, Mean score = 0.8782139741161032
+reg_covar = 5: Min score = 0.991250080422055, Mean score = 0.9998679217326921
+reg_covar = 10: Min score = 0.9987766087594813, Mean score = 0.999945378120418
+```
+
+To tell you the short story, by a simple grid search for the best reg_covar parameter one can find that more features require larger reg_covar for better performance. By doing so you can find that the good parameters are:
+
+- 33 features: 2.0,
+- 34 features: 2.5,
+- 35 features: 3.5,
+- 36 features: 4.0,
+- 37 features: 4.5,
+- 38 features: 5.0,
+- 39 features: 5.5,
+- 40 features: 6.0,
+- 41 features: 6.5,
+- 42 features: 7.0,
+- 43 features: 7.5,
+- 44 features: 8.0,
+- 45 features: 9,
+- 46 features: 9.5,
+- 47 features: 10.
+
+We still have one thing not clarified enough.
+
+### Important note: how do we know the number of clusters in advance?
+
+We were building models in the assumption that there are 3 clusters per class, but how can we know it? Well, the answer is pretty simple, right choice of the n_components will give better results:
+
+#Clusters per class = 4, #Components of GMM = 4: AUC = 0.7170955882352941
+#Clusters per class = 4, #Components of GMM = 6: AUC = 0.8263480392156862
+#Clusters per class = 4, #Components of GMM = 8: AUC = 0.9587009803921569
+
+#Clusters per class = 3, #Components of GMM = 4: AUC = 0.7400829259236339
+#Clusters per class = 3, #Components of GMM = 6: AUC = 1.0
+#Clusters per class = 3, #Components of GMM = 8: AUC = 0.9844049755554181
+
+#Clusters per class = 2, #Components of GMM = 4: AUC = 1.0
+#Clusters per class = 2, #Components of GMM = 6: AUC = 1.0
+#Clusters per class = 2, #Components of GMM = 8: AUC = 0.9924635532493205
+
+For me it seemed like for most of the groups the best option was taking 3 clusters per class, sometimes 2 was slightly better (but it might be the effect of the flipped target). I assumed that this parameter was set to 3 for all groups.
+
+***
+
+### Conclusion
+
+Parameters found in step 5 will give you an AUC of 0.99 minimum (for the true target of course)! So we will use these parameters to build a model for competition data. Final kernel with model can be found [here]().
+
+Thanks for reading!
