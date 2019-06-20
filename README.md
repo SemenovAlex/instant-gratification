@@ -55,17 +55,35 @@ By setting shuffle=False, I force first 30 columns to be informative, next 30 to
 
 We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**
 
-Number of important features ranges from 33 to 47, so **n_informative** \in **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
+Number of important features ranges from 33 to 47, so **n_informative** in **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
 
 ***
 
 ### Step 2. Shift, Scale and randomness (last 4 parameters of make_classification function).
 
+Because mean and standard deviation for random columns are 0 and 1 respectively, we can assume that shift and scale were set to default **shift=0**, **scale=1**. On top of that, standard deviation for important columns also look the same for competition data and for data that we've just generated. So it's a pretty promising assumption and we can go further. Parameters **shuffle** and **random_state** are not so important, because they not change the nature of the data set.
 
+***
 
+### Step 3. Most interesting parameters (why QDA is not so perfect?).
 
-From the feature statistics I will assume that parameters shift and scale were set to default **shift=0**, **scale=1**. Parameters **shuffle** and **random_state** are not so important for us right now, because they not change the nature of the data set.
+Parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones that we are not very sure about, especially **n_clusters_per_class**. Weights look to be the same, because target seemed to be balanced. What makes it imposible to get 100% accurate model is that **flip_y>0**, and we can not predict this random factor in any case. However, what we can try is to build a model that can perfectly predict when **flip_y=0** and leave the rest for the luck.
 
-<br>
+QDA shown to be a very good approach, but let me show you the case when it's working not so good:
 
-Second, parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones that we are not very sure about, especially **n_clusters_per_class**. However, what makes it imposible to get 100% accurate model is that **flip_y>0**, we can not predict this random factor in any case.
+<a href="https://ibb.co/vVDRDf7"><img src="https://i.ibb.co/k5MvMzR/4-components.png" alt="4-components" border="0" width="1000px"></a>
+
+Data set was generated with make_classification:
+
+~~~~
+make_classification(
+    n_samples=1000, n_features=2, n_informative=2, n_redundant=0, 
+    n_classes=2, n_clusters_per_class=2, flip_y=0.0, class_sep=5,
+    random_state=7, shuffle=False
+)
+~~~~
+
+Now, lets look how QDA algorithm can hadle it:
+
+<a href="https://ibb.co/pWRTdtD"><img src="https://i.ibb.co/RhBKcxn/qda-model.png" alt="qda-model" border="0" width="1000px"></a>
+
