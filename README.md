@@ -51,7 +51,7 @@ fake_data = make_classification(
 
 By setting shuffle=False, I force first 30 columns to be informative, next 30 to be redundant and others to be just noise. By doing it 1000 times lets look at the distribution of the standard deviation of the informative, redundant and random features.
 
-<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0" width="1000px"></a>
+<a href="https://ibb.co/HG8WWDR"><img src="https://i.ibb.co/L97LLzB/features-std.png" alt="features-std" border="0" width="500px"></a>
 
 We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**
 
@@ -71,7 +71,7 @@ Parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones 
 
 QDA shown to be a very good approach, but let me show you the case when it's working not so good:
 
-<a href="https://ibb.co/vVDRDf7"><img src="https://i.ibb.co/k5MvMzR/4-components.png" alt="4-components" border="0" width="1000px"></a>
+<a href="https://ibb.co/vVDRDf7"><img src="https://i.ibb.co/k5MvMzR/4-components.png" alt="4-components" border="0" width="500px"></a>
 
 Data set was generated with make_classification:
 
@@ -85,7 +85,7 @@ make_classification(
 
 Now, lets look how QDA algorithm can hadle it:
 
-<a href="https://ibb.co/pWRTdtD"><img src="https://i.ibb.co/RhBKcxn/qda-model.png" alt="qda-model" border="0" width="1000px"></a>
+<a href="https://ibb.co/pWRTdtD"><img src="https://i.ibb.co/RhBKcxn/qda-model.png" alt="qda-model" border="0" width="500px"></a>
 
 Pretty good, however, we see that it doesn't see this structure of four clusters in the data. From make_classification documentation one can find that these clusters are gaussian components, so the best way to find them is to apply Gaussian Mixture model. 
 
@@ -93,7 +93,7 @@ _Note: Gaussian Mixture model will only give you clusters, you need to bind thes
 
 Lets look how GMM algorithm performed at this data:
 
-<a href="https://ibb.co/Q9sPPxm"><img src="https://i.ibb.co/0qPCCzJ/gm-model.png" alt="gm-model" border="0" width="1000px"></a>
+<a href="https://ibb.co/Q9sPPxm"><img src="https://i.ibb.co/0qPCCzJ/gm-model.png" alt="gm-model" border="0" width="500px"></a>
 
 Nearly perfect! Let's move to the step 4.
 
@@ -117,3 +117,32 @@ We see that the impact from flips can drammatically change the result. However, 
 2. We can assume that the flips are evenly spread across our predictions.
 
 Let's also look at the distribution of AUC for randomly flipped target.
+
+<a href="https://ibb.co/PjBttyk"><img src="https://i.ibb.co/F3Gnn1p/auc.png" alt="auc" border="0" width="500px"></a>
+
+It means that results on unseen data can deviate by more than 0.005 in AUC even for the perfect model. So our strategy will be not to find the parameters to raise on the LB of the competition, but to find the parameters that can perfectly predict target for most of the data set.
+
+***
+
+### Step 5. Experiments with synthetic data
+
+How we can build a model that perfectly predicts data and not overfit to it? Because we have a strong hypothesis on how data was created we can tune model parameters such that it will predict perfectly for most of the synthetically generated data sets. Not showing competition to it will save us from overfitting.
+
+We will be generating a data set of the same structure as the competition data:
+
+- **n_clusters_per_class=3**
+- by variating **weights**, we will change the propotion of the dominant class from 0.5 to 0.6
+- **flip=0** to experiment if GM model can be completely correct
+- **class_sep** will be a random number between 0.9 and 1
+- **hypercube** will be chosen randomly between True and False
+
+Next thing to do is to generate hundreds of such data sets and optimize parameters of the GMM.
+
+For the first attempt we'll set the parameter n_components in the GMM to 6, because we know that there will be 3 clusters per each of the 2 classes, and do the modelling with other parameters set to default. Let's look at the minimum, maximum and mean score that we can get for 100 different data sets:
+
+```
+Min score =  0.44783168741949336
+Mean score =  0.8159223370950822
+Max score =  1.0
+```
+
