@@ -18,27 +18,42 @@ Knowing that let's look closer at what make_classification function does. This f
 - n_redundant: The number of redundant features, linear combinations of informative features.
 - n_repeated: The number of duplicated features.
 - n_classes: The number of classes.
-
 - n\_clusters\_per_class: The number of clusters per class.
 - weights: The proportions of samples assigned to each class.
 - flip_y: The fraction of samples whose class are randomly exchanged.
 - class_sep: Larger values spread out the clusters/classes and make the classification task easier.
 - hypercube: Parameter corresponding to the placement of the cluster centroids.
-
 - shift: Shift of the feature values.
 - scale: Scaling of the features by the specified value.
 - shuffle: Shuffling the samples and the features.
 - random_state: Random state.
 
-Next, I invite you to follow my sequence of thoughts.
+So, I invite you to follow the sequence of my thoughts.
 
 ***
 
-### Step 1. Size and features (first 6 parameters of make classification function).
+### Step 1. Size and features (first 6 parameters of make_classification function).
 
-First, from the data structure and size, we can assume that **n_features=255** and **n_samples=1024** were taken to generate both training and test data sets (both private and public).
+From the data structure (512 groups and 255 variables) and size (262144 = 512 * 512), we can assume that **n_features=255** and **n_samples=1024** were taken to generate both training and test data sets (both private and public).
 
-Number of important features ranges from 33 to 47, so **n_informative** $\in$ **{33,...,47}**. Number of redundant features is **n_redundant=255-n_informative**, while there's no repeated features **n_repeated=0**. Number of classes is obviously **n_classes=2**. From the feature statistics I will assume that parameters shift and scale were set to default **shift=0**, **scale=1**. Parameters **shuffle** and **random_state** are not so important for us right now, because they not change the nature of the data set.
+Now, let's talk about features. First of all, repeated features are exact copies of important features, and because we don't see such columns in competition data we set **n_repeated=0**. Let's generate data set with make_classification function and following parameters:
+
+~~~~
+fake_data = make_classification(
+    n_samples=1024, 
+    n_features=255, 
+    n_informative=30, 
+    n_redundant=5, 
+    n_repeated=0, 
+    n_classes=2, 
+    shuffle=False)
+~~~~
+
+By setting shuffle=False, I force first 30 columns to be informative, next 5 to be redundant and others to be just noise. By doing it 1000 times lets look at the distribution of the standard deviation of the informative, redundant and random features.
+
+ 
+
+Number of important features ranges from 33 to 47, so **n_informative** $\in$ **{33,...,47}**. Number of redundant features is **n_redundant=255-n_informative**, while there's no repeated features  Number of classes is obviously **n_classes=2**. From the feature statistics I will assume that parameters shift and scale were set to default **shift=0**, **scale=1**. Parameters **shuffle** and **random_state** are not so important for us right now, because they not change the nature of the data set.
 
 <br>
 
