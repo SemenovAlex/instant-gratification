@@ -71,7 +71,7 @@ Parameters **n_clusters_per_class, weights, class_sep, hypercube** are the ones 
 
 QDA shown to be a very good approach, but let me show you the case when it's working not so good:
 
-<a href="https://ibb.co/vVDRDf7"><img src="https://i.ibb.co/k5MvMzR/4-components.png" alt="4-components" border="0" width="800px"></a>
+<a href="https://ibb.co/bKhGFTq"><img src="https://i.ibb.co/NyhGr5Q/4-components.png" alt="4-components" border="0" width="800px"></a>
 
 Data set was generated with make_classification:
 
