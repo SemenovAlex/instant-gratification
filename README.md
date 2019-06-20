@@ -30,9 +30,11 @@ Knowing that let's look closer at what make_classification function does. This f
 - shuffle: Shuffling the samples and the features.
 - random_state: Random state.
 
-Next, I invite you to follow my sequence of thoughts ().
+Next, I invite you to follow my sequence of thoughts.
 
-### Step 1. Size and features.
+***
+
+### Step 1. Size and features (first 6 parameters of make classification function).
 
 First, from the data structure and size, we can assume that **n_features=255** and **n_samples=1024** were taken to generate both training and test data sets (both private and public).
 
