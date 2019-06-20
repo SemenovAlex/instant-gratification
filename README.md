@@ -55,7 +55,7 @@ By setting shuffle=False, I force first 30 columns to be informative, next 30 to
 
 We see clear difference in standard deviation for informative, redundant and random features, that's why selecting important features with 1.5 threshold works so well. Moreover, there are no features in the competition data that have std bigger than 5, which leads us to an assumption that **n_redundant=0**
 
-Number of important features ranges from 33 to 47, so **n_informative** $$\in$$ **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
+Number of important features ranges from 33 to 47, so **n_informative** \in **{33,...,47}**. Number of classes is obviously **n_classes=2**. 
 
 ***
 
