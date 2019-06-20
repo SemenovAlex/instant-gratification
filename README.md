@@ -51,7 +51,7 @@ fake_data = make_classification(
 
 By setting shuffle=False, I force first 30 columns to be informative, next 30 to be redundant and others to be just noise. By doing it 1000 times lets look at the distribution of the standard deviation of the informative, redundant and random features.
 
-![features-std](https://github.com/SemenovAlex/instant-gratification/features-std.png)
+![features-std](https://github.com/SemenovAlex/instant-gratification/blob/master/features-std.png)
 
 Number of important features ranges from 33 to 47, so **n_informative** $\in$ **{33,...,47}**. Number of redundant features is **n_redundant=255-n_informative**, while there's no repeated features  Number of classes is obviously **n_classes=2**. From the feature statistics I will assume that parameters shift and scale were set to default **shift=0**, **scale=1**. Parameters **shuffle** and **random_state** are not so important for us right now, because they not change the nature of the data set.
 
