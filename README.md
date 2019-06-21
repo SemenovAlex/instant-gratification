@@ -1,4 +1,4 @@
-# Instant Gratification Solution (47th place)
+# Instant Gratification Solution (Top-3%)
 
 I entered the Instant Gratification competition when it was 16 days to go, so there was already a lot of important information available in Kernels and Discussions. Shortly, in the Instant-Gratification competition we deal with a dataset of the following structure:
     
