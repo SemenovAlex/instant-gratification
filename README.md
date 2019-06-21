@@ -223,7 +223,7 @@ For me it seemed like for most of the groups the best option was taking 3 cluste
 
 Parameters found in step 5 will give you an AUC of 0.99 minimum (for the true target of course)! So we will use these parameters to build a model for competition data. 
 
-Final kernel with the model can be found [here]().
-Jypyter Notebook for this analysis can be found [here]().
+Final kernel with the model can be found [here](https://www.kaggle.com/alexsemenov/only-gmm).
+Jypyter Notebook for this analysis can be found [here](https://github.com/SemenovAlex/instant-gratification/blob/master/instant-gratification-solution.ipynb).
 
 Thanks for reading!
